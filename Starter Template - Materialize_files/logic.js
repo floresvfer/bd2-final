@@ -1,3 +1,6 @@
+const colors = [];
+
+
 const random_hex_color_code = () => {
     let n = (Math.random() * 0xfffff * 1000000).toString(16);
     return '#' + n.slice(0, 6);
@@ -25,6 +28,7 @@ function getDataSet(obj){
     for (const [key, value] of Object.entries(obj)) {
         if(key === 'nombre'){
             dataset.label = value;
+            colors[value] = color;
             continue;
         }
         dataset.data.push(value);
@@ -43,10 +47,14 @@ function getDataSets(data){
 function fillTable(data){
   let flag = true;
 data.forEach(d => {
-  let head = '<tr>';
+  let head = '<tr style="background-color: #36A3FB; color: white">';
   let row = '<tr>';
   for (const [key, value] of Object.entries(d)) {
-      row += `<td>${value}</td>`;
+      let color = '#FFF';
+      if(key === 'nombre'){
+        color = colors[value];
+      }
+      row += `<td style="background-color: ${color}">${value}</td>`;
       if(flag){
         head += `<th>${key.toUpperCase()}</th>`;
       }
@@ -74,7 +82,7 @@ $(document).ready(() => {
 
 
 
-  fillTable(res.data);
+
 
 
   const labels = ['E', 'F', 'M', 'A', 'M', 'J'];
@@ -107,7 +115,7 @@ $(document).ready(() => {
         text: 'Promedios de Ranking Bancario'
       }
     }
-  },
+  }
 };
 
 
@@ -117,6 +125,9 @@ var chart = new Chart(
   document.getElementById('myChart'),
   config
 );
+
+
+fillTable(res.data);
 });
 
 });
