@@ -33,15 +33,15 @@
       <div style="width: 50%; margin-left: auto; margin-right: auto;">
       <div class="row center">
         <label for="username">Usuario</label>
-        <input name="username" />
+        <input id="username" name="username" />
       </div>
       <div class="row center">
         <label for="pwd">Contraseña</label>
-        <input name="pwd" />
+        <input id="pwd" name="pwd" />
       </div>
       <div class="row center">
        
-        <a href="./home.html" class="btn-large light-blue lighten-1" name="pwd" >Ingresar</a>
+        <a onclick="red()" class="btn-large light-blue lighten-1" name="pwd" >Ingresar</a>
       </div>
     </div>
      
@@ -110,6 +110,21 @@
     </div>
   </footer>
 
+  <div class="modal" id="myModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Lo sentimos</h5>
+      
+        </div>
+        <div class="modal-body">
+          <p>Al parecer ha ocurrido un problema con sus credenciales, por favor intentelo de nuevo.</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
 
   <!--  Scripts-->
 
@@ -122,8 +137,25 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <script>
+
+  $('.modal').modal({
+      dismissible: true
+  });
+
    
-   
+   function red(){
+     let username = $('#username').val();
+     let pwd = $('#pwd').val();
+     if(
+       (username == 'admin' && pwd == 'admin') ||
+       (username == 'test' && pwd == 'test') ||
+       (username == 'user' && pwd == 'user')
+       ){
+      window.location.href = 'home.html';
+     }else{
+      $('#myModal').modal('open');
+     }
+   }
     
   </script>
 
