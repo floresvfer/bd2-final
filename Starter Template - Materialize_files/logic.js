@@ -40,10 +40,42 @@ function getDataSets(data){
     return datasets;
 }
 
+function fillTable(data){
+  let flag = true;
+data.forEach(d => {
+  let head = '<tr>';
+  let row = '<tr>';
+  for (const [key, value] of Object.entries(d)) {
+      row += `<td>${value}</td>`;
+      if(flag){
+        head += `<th>${key.toUpperCase()}</th>`;
+      }
+  }
+  $('#myTableBody').append(row + '</tr>');
+  if(flag){
+    $('#myTableHead').append(head + '</tr>');
+    flag = false;
+  }
+  
+});
+  
+var t = $("#myTable").DataTable({
+  responsive: true,
+  searching: false
+});
+
+}
+
 $(document).ready(() => {
+
   
   axios.get('http://35.188.195.89:3000/perfiles_financieros')
   .then(res => {
+
+
+
+  fillTable(res.data);
+
 
   const labels = ['E', 'F', 'M', 'A', 'M', 'J'];
   const data = {
